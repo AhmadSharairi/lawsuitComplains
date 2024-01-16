@@ -1,0 +1,103 @@
+<div class="outer">
+  <div class="container">
+    <div class="panel border bg-white ">
+      <div class="panel-heading ">
+        <h3 class="pt-3 font-weight-bold">Sign Up</h3>
+
+      </div>
+      <div class="panel-body p-3">
+        <form [formGroup]="SingupForm">
+          <div class="form-group pt-3">
+            <div class="input-field"
+              [class.error]="SingupForm.controls['firstName'].dirty && SingupForm.hasError('required', 'firstName')">
+              <span class="fa fa-user p-2"></span>
+              <input formControlName="firstName" type="text" placeholder="FirstName">
+            </div>
+          </div>
+
+          <small *ngIf="SingupForm.controls['firstName'].dirty && SingupForm.hasError('required', 'firstName')"
+            class="text-danger">FirstName is required</small>
+
+
+
+          <div class="form-group pt-3">
+            <div class="input-field"
+              [class.error]="SingupForm.controls['lastName'].dirty && SingupForm.hasError('required', 'lastName')">
+              <span class="fa fa-user p-2"></span>
+              <input formControlName="lastName" type="text" placeholder="LastName">
+            </div>
+          </div>
+
+          <small *ngIf="SingupForm.controls['lastName'].dirty && SingupForm.hasError('required', 'lastName')"
+            class="text-danger">LastName is required</small>
+
+
+
+          <div class="form-group pt-3">
+            <div class="input-field "
+              [class.error]="SingupForm.controls['email'].dirty && SingupForm.hasError('required', 'email')">
+              <span class="fa fa-envelope p-2"></span>
+              <input formControlName="email" required="email" type="email" placeholder="Email">
+            </div>
+          </div>
+          <small *ngIf="SingupForm.controls['email'].dirty && SingupForm.hasError('required', 'email') "
+            class="text-danger"> *Email is required</small>
+          <small
+            *ngIf=" SingupForm.hasError('email', 'email') && SingupForm.controls['email'].touched && SingupForm.controls['email'].errors"
+            class="text-danger">Invalid Email Format </small>
+
+          <div class="form-group pt-3">
+            <div class="input-field"
+              [class.error]="SingupForm.controls['username'].dirty && SingupForm.hasError('required', 'username')">
+              <span class="fa fa-user p-2"></span>
+              <input formControlName="username" type="text" placeholder="Username">
+            </div>
+          </div>
+
+          <small *ngIf="SingupForm.controls['username'].dirty && SingupForm.hasError('required', 'username')"
+            class="text-danger">Username is required</small>
+
+
+          <div class="form-group pt-3">
+            <div class="input-field "
+              [class.error]="SingupForm.controls['password'].dirty && SingupForm.hasError('required', 'password')">
+              <span class="fa fa-lock p-2 "> </span>
+              <input [(ngModel)]="Pass" formControlName="password" [type]="[type]" placeholder="Password"
+                (input)="checkPassValidate(Pass)">
+              <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
+            </div>
+          </div>
+
+          <!--ErrorHandler-->
+          <small *ngIf="SingupForm.controls['password'].dirty && SingupForm.hasError('required', 'password')"
+            class="text-danger">Password is required</small>
+
+
+          <small class="error-message" style="color: red;"
+            *ngIf="(Pass.length < 8) && SingupForm.controls['password'].value ">
+            Must be at least 8 characters<br>
+          </small>
+
+          <small class="error-message" style="color: red;"
+            *ngIf="!isPassAlpha &&  SingupForm.controls['password'].value">
+            Must be Alphanumeric<br>
+          </small>
+
+          <small class="error-message" style="color: red;"
+            *ngIf="!isSpecialChars && SingupForm.controls['password'].value">
+            Must be have Special Characters<br>
+          </small>
+
+          <!--ErrorHandler-->
+
+          <button (click)="onSingup()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Sign
+            up</button>
+          <div class="text-center pt-4 text-muted">Already have an account? <a id="forget" routerLink="/">Login</a>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>

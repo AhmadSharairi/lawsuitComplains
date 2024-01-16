@@ -1,0 +1,14 @@
+@import url('src/assets/css/common.css');
+
+.outer {
+  background-image: url('src/assets/img/Reset.png');
+}
+
+.panel {
+  width: 450px;
+  padding: 50px;
+}
+
+
+
+
