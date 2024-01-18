@@ -5,7 +5,9 @@ namespace API.DTOs
         public string Name { get; set; }
         public int Number { get; set; }
         public string ComplaintText { get; set; }
-    
-        public List<string> DemandDescriptions { get; set; }
+
+        public List<LocalizedTextDto> ComplaintTexts { get; set; }
+
+        public List<DemandDto> DemandDescriptions { get; set; }
     }
 }

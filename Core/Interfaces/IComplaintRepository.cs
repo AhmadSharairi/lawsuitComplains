@@ -4,15 +4,18 @@ namespace Core.Interfaces
 {
     public interface IComplaintRepository
     {
-
-        Task<Complaint> GetComplaintByIdAsync(int id);
-        // Task<IReadOnlyList<Complaint>> GetComplaintAsync();
-
-        Task<IReadOnlyList<Complaint>> GetComplaintAsync();
-        Task<Complaint> CreateComplaintAsync(Complaint complaint);
-        Task<bool> UpdateComplaintByIdAsync(int complaintId, Complaint updatedComplaintDto);
-
+      Task<Complaint> CreateComplaintAsync(Complaint complaint);
+       Task<bool> UpdateComplaintByIdAsync(int complaintId, Complaint updatedComplaintDto);
+     Task<IReadOnlyList<Complaint>> GetComplaintsAsync();
          Task<bool> UpdateComplaintStatusAsync(int complaintId, string status);
+        Task<Complaint> GetComplaintByIdAsync(int id);
+
+
+       
+   
+       
+
+     
     
     }
 }

@@ -1,13 +1,17 @@
 
+using System.Globalization;
 using System.Net;
 using System.Text;
 using API.Helpers;
 using AutoMapper;
 using Core.Interfaces;
+using Core.Services;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Stripe.Terminal;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,12 +36,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles)); // to mapp Dtos
 
-
-
 builder.Services.AddScoped<IComplaintRepository , ComplaintRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDemandRepository, DemandRepository>();
 builder.Services.AddScoped<IAttachmentRepository, AttachmentRepository>();
+builder.Services.AddScoped<ILocalizationService, LocalizationService>();
+
 
 
 
@@ -46,6 +50,22 @@ builder.Services.AddDbContext<ComplaintContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("LawsuitConnection"));
 
 });
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new List<CultureInfo>
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("ar-EG")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture("en-US");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+
+
 
 
 // Config JWT after added to Usercontroller 
@@ -68,8 +88,7 @@ builder.Services.AddAuthentication(x =>
      };
 });
 
-
-    
+builder.Services.AddLocalization(options => options.ResourcesPath = "API");
 
 var app = builder.Build();
 
@@ -80,9 +99,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
 
 app.UseCors("MyPolicy"); // First , UseCors Must Be Above of the Authentications methods Call 
+app.UseRequestLocalization();
 app.UseAuthentication(); // Second ,UseAuthentication must be above of Authorizations Method
 app.UseAuthorization(); //  Third , last  Use Authorization
 

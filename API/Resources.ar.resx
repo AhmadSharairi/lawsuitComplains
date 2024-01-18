@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ComplaintSubmitted" xml:space="preserve">
+    <value>تم تقديم الشكوى بنجاح</value>
+  </data>
+  <data name="DemandUpdated" xml:space="preserve">
+    <value>تم تحديث الشكوى بنجاح</value>
+  </data>
+ <data name="NoComplaintsFound" xml:space="preserve">
+    <value>لا توجد شكاوى متاحة.</value>
+  </data>
+  <data name="NotAdminError" xml:space="preserve">
+    <value>أنت لست مسؤول الإدارة.</value>
+  </data>
+  <data name="StatusUpdatedSuccessfully" xml:space="preserve">
+    <value>تم تحديث حالة الشكوى بنجاح.</value>
+  </data>
+  <data name="StatusUpdateFailed" xml:space="preserve">
+    <value>فشل تحديث حالة الشكوى.</value>
+  </data>
+  <data name="InvalidStatusOrNotAdminError" xml:space="preserve">
+    <value>قيمة حالة غير صالحة أو أنت لست مسؤول الإدارة.</value>
+  </data>
+</root>

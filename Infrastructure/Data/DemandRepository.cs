@@ -19,6 +19,7 @@ namespace Infrastructure.Data
                 _complaintContext.Demands.Add(demand);
             }
             await _complaintContext.SaveChangesAsync();
+            
             return demands;
         }
 

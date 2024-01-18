@@ -20,6 +20,14 @@
         },
         "runtime": {
           "API.dll": {}
+        },
+        "resources": {
+          "ar/API.resources.dll": {
+            "locale": "ar"
+          },
+          "en/API.resources.dll": {
+            "locale": "en"
+          }
         }
       },
       "AutoMapper/8.1.1": {
@@ -632,6 +640,9 @@
         }
       },
       "Core/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.OpenApi": "7.0.2"
+        },
         "runtime": {
           "Core.dll": {}
         }

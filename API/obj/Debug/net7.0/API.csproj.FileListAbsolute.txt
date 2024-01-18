@@ -74,3 +74,12 @@ C:\Users\user\VsCode\lawsuits\api\bin\Debug\net7.0\Core.dll
 C:\Users\user\VsCode\lawsuits\api\bin\Debug\net7.0\Infrastructure.dll
 C:\Users\user\VsCode\lawsuits\api\bin\Debug\net7.0\Infrastructure.pdb
 C:\Users\user\VsCode\lawsuits\api\bin\Debug\net7.0\Core.pdb
+C:\Users\user\VsCode\lawsuits\api\bin\Debug\net7.0\ar\API.resources.dll
+C:\Users\user\VsCode\lawsuits\api\bin\Debug\net7.0\en\API.resources.dll
+C:\Users\user\VsCode\lawsuits\api\obj\Debug\net7.0\API.Resources.ar.resources
+C:\Users\user\VsCode\lawsuits\api\obj\Debug\net7.0\API.Resources.en.resources
+C:\Users\user\VsCode\lawsuits\api\obj\Debug\net7.0\API.csproj.GenerateResource.cache
+C:\Users\user\VsCode\lawsuits\api\obj\Debug\net7.0\ar\API.resources.cs
+C:\Users\user\VsCode\lawsuits\api\obj\Debug\net7.0\ar\API.resources.dll
+C:\Users\user\VsCode\lawsuits\api\obj\Debug\net7.0\en\API.resources.cs
+C:\Users\user\VsCode\lawsuits\api\obj\Debug\net7.0\en\API.resources.dll

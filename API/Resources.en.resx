@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="ComplaintSubmitted" xml:space="preserve">
+    <value>Complaint submitted successfully.</value>
+  </data>
+  <data name="DemandUpdated" xml:space="preserve">
+    <value>Complaint updated successfully.</value>
+  </data>
+  <data name="NoComplaintsFound" xml:space="preserve">
+    <value>No complaints available.</value>
+  </data>
+  <data name="NotAdminError" xml:space="preserve">
+    <value>You are not an admin.</value>
+  </data>
+  <data name="StatusUpdatedSuccessfully" xml:space="preserve">
+    <value>Complaint status updated successfully.</value>
+  </data>
+  <data name="StatusUpdateFailed" xml:space="preserve">
+    <value>Failed to update complaint status.</value>
+  </data>
+  <data name="InvalidStatusOrNotAdminError" xml:space="preserve">
+    <value>Invalid status value or you are not an admin.</value>
+  </data>
+</root>

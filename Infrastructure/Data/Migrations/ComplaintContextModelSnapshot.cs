@@ -36,9 +36,6 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("SubmissionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -95,6 +92,35 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("ComplaintId");
 
                     b.ToTable("Demands");
+                });
+
+            modelBuilder.Entity("Core.Entities.LocalizedText", b =>
+                {
+                    b.Property<int>("LocalizedTextId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocalizedTextId"), 1L, 1);
+
+                    b.Property<int>("ComplaintId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DemandId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LanguageCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LocalizedTextId");
+
+                    b.HasIndex("ComplaintId");
+
+                    b.HasIndex("DemandId");
+
+                    b.ToTable("LocalizedTexts");
                 });
 
             modelBuilder.Entity("Core.Entities.User", b =>
@@ -161,7 +187,7 @@ namespace Infrastructure.Data.Migrations
                     b.HasOne("Core.Entities.User", "User")
                         .WithMany("Complaints")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -172,7 +198,7 @@ namespace Infrastructure.Data.Migrations
                     b.HasOne("Core.Entities.User", "User")
                         .WithMany("Attachments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -183,15 +209,41 @@ namespace Infrastructure.Data.Migrations
                     b.HasOne("Complaint", "Complaint")
                         .WithMany("Demands")
                         .HasForeignKey("ComplaintId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Complaint");
                 });
 
+            modelBuilder.Entity("Core.Entities.LocalizedText", b =>
+                {
+                    b.HasOne("Complaint", "Complaint")
+                        .WithMany("ComplaintTexts")
+                        .HasForeignKey("ComplaintId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Demand", "Demand")
+                        .WithMany("DemandDescriptions")
+                        .HasForeignKey("DemandId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Complaint");
+
+                    b.Navigation("Demand");
+                });
+
             modelBuilder.Entity("Complaint", b =>
                 {
+                    b.Navigation("ComplaintTexts");
+
                     b.Navigation("Demands");
+                });
+
+            modelBuilder.Entity("Core.Entities.Demand", b =>
+                {
+                    b.Navigation("DemandDescriptions");
                 });
 
             modelBuilder.Entity("Core.Entities.User", b =>

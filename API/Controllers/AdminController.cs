@@ -4,22 +4,25 @@ using Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace API.Controllers
-{    
-    
-    
+{
+
+
     [ApiController]
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
     {
         private readonly IComplaintRepository _complainRepo;
         private readonly ComplaintContext _complaintContext;
+        private readonly IStringLocalizer<AdminController> _localizer;
 
-        public AdminController(IComplaintRepository complainRepo, ComplaintContext complaintContext)
+        public AdminController(IComplaintRepository complainRepo, ComplaintContext complaintContext, IStringLocalizer<AdminController> localizer)
         {
             _complainRepo = complainRepo;
             _complaintContext = complaintContext;
+            _localizer = localizer;
         }
 
 
@@ -30,11 +33,12 @@ namespace API.Controllers
         {
             if (await CheckUserRoleAsync("Admin"))
             {
-                var complaints = await _complainRepo.GetComplaintAsync();
+                var complaints = await _complainRepo.GetComplaintsAsync();
 
                 if (complaints == null || complaints.Count == 0)
                 {
-                    return NotFound("No complaints found.");
+                    var notFoundMessage = _localizer["NoComplaintsFound"].Value;
+                    return NotFound(notFoundMessage);
                 }
 
                 return Ok(complaints);
@@ -42,7 +46,8 @@ namespace API.Controllers
             else
             {
 
-                return BadRequest("You Are Not the Admin");
+                var notAdminMessage = _localizer["NotAdminError"].Value;
+                return BadRequest(notAdminMessage);
             }
         }
 
@@ -52,23 +57,24 @@ namespace API.Controllers
         [HttpPut("UpdateStatus")]
         public async Task<IActionResult> UpdateComplaintStatus(int complaintId, [FromBody] StatusDto statusDto)
         {
-            var complaints = await _complainRepo.GetComplaintAsync();
+            var complaints = await _complainRepo.GetComplaintsAsync();
 
-            if (statusDto.Status == "Accepted" || statusDto.Status == "Rejected" && (await CheckUserRoleAsync("Admin")))
+            if ((statusDto.Status == "Accepted" || statusDto.Status == "Rejected") && (await CheckUserRoleAsync("Admin")))
             {
                 var result = await _complainRepo.UpdateComplaintStatusAsync(complaintId, statusDto.Status);
 
                 if (result)
                 {
-                    return Ok(new { Message = "Status updated successfully." });
+                    var successMessage = _localizer[statusDto.MessageKey].Value;
+                    return Ok(new { Message = successMessage });
                 }
 
-
-                return NotFound(new { Message = "Status update failed." });
+                var failureMessage = _localizer[statusDto.MessageKey].Value;
+                return NotFound(new { Message = failureMessage });
             }
 
-
-            return BadRequest(new { Message = "Invalid status value. Accepted or Rejected expected. Or You Are Not the Admin!" });
+            var invalidStatusMessage = _localizer[statusDto.MessageKey].Value;
+            return BadRequest(new { Message = invalidStatusMessage });
         }
 
 

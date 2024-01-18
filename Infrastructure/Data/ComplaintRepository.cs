@@ -1,20 +1,19 @@
-
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
     public class ComplaintRepository : IComplaintRepository
     {
-
         private readonly ComplaintContext _complaintContext;
+
         public ComplaintRepository(ComplaintContext complaintContext)
         {
-            _complaintContext = complaintContext;
-
+            _complaintContext = complaintContext ?? throw new ArgumentNullException(nameof(complaintContext));
         }
-
 
         public async Task<Complaint> CreateComplaintAsync(Complaint complaint)
         {
@@ -22,7 +21,6 @@ namespace Infrastructure.Data
             await _complaintContext.SaveChangesAsync();
             return complaint;
         }
-
 
         public async Task<bool> UpdateComplaintByIdAsync(int complaintId, Complaint updatedComplaint)
         {
@@ -37,10 +35,8 @@ namespace Infrastructure.Data
                     return false;
                 }
 
-                currentComplaint.Text = updatedComplaint.Text;
+                currentComplaint.ComplaintTexts = updatedComplaint.ComplaintTexts;
                 currentComplaint.SubmissionDate = DateTime.Now;
-
-
 
                 if (updatedComplaint.Demands != null)
                 {
@@ -48,24 +44,20 @@ namespace Infrastructure.Data
                     currentComplaint.Demands.AddRange(updatedComplaint.Demands);
                 }
 
-
                 await _complaintContext.SaveChangesAsync();
 
                 return true;
             }
-            catch (Exception)
+            catch (DbUpdateException)
             {
-
                 return false;
             }
         }
 
-
-        public async Task<IReadOnlyList<Complaint>> GetComplaintAsync()
+        public async Task<IReadOnlyList<Complaint>> GetComplaintsAsync()
         {
             return await _complaintContext.Complaints.ToListAsync();
         }
-
 
         public async Task<bool> UpdateComplaintStatusAsync(int complaintId, string status)
         {
@@ -85,7 +77,7 @@ namespace Infrastructure.Data
 
                 return true;
             }
-            catch (Exception)
+            catch (DbUpdateException)
             {
                 return false;
             }
@@ -93,7 +85,9 @@ namespace Infrastructure.Data
 
         public Task<Complaint> GetComplaintByIdAsync(int id)
         {
-           return _complaintContext.Complaints.FirstOrDefaultAsync(x =>x.ComplaintId ==id);
+            return _complaintContext.Complaints.FirstOrDefaultAsync(x => x.ComplaintId == id);
         }
+
+      
     }
 }

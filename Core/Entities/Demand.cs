@@ -1,4 +1,3 @@
-
 namespace Core.Entities
 {
     public class Demand
@@ -6,6 +5,7 @@ namespace Core.Entities
         public int DemandId { get; set; }
         public string Description { get; set; }
         public int ComplaintId { get; set; }
-        public Complaint Complaint { get;  set; }
+        public Complaint Complaint { get; set; }
+        public List<LocalizedText> DemandDescriptions { get; set; } = new List<LocalizedText>();
     }
 }
